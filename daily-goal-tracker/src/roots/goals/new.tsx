@@ -29,7 +29,7 @@ export const NewGoal: React.FC = () => {
               data-testid="description"
               onChange={onChange}
             />
-            <div key={`inline-radio`} className="mb-3">
+            <div key={`inline-radio`} className="mb-3 mt-2">
               <Form.Check
                 inline
                 value="numerical"
