@@ -1,6 +1,14 @@
 import React from "react";
-import { Table } from "react-bootstrap";
+import { Table, Tooltip } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import {
+  CartesianGrid,
+  ResponsiveContainer,
+  Scatter,
+  ScatterChart,
+  XAxis,
+  YAxis,
+} from "recharts";
 import { GoalSummary } from "../../components/goalSummary";
 import { PageLayout } from "../../components/pageLayout";
 import { Goal, getAveragesByWeek, getGoalById } from "../../models/goal";
@@ -53,9 +61,43 @@ const YesNoTable = ({ goal }: { goal: Goal }) => {
 const NumericalDisplay = ({ goal }: { goal: Goal }) => {
   if (goal.type === "numerical") {
     const averages = getAveragesByWeek(goal.records);
+    const formattedAverages = averages
+      .map((average) => {
+        const averageDate = new Date(average.startOfWeek);
+        const niceDate = `${averageDate.getDate()}/${
+          averageDate.getMonth() + 1
+        }/${averageDate.getFullYear()}`;
+        return {
+          niceDate,
+          average: average.average,
+          date: averageDate,
+        };
+      })
+      .sort((a, b) => Number(b.date) - Number(a.date));
+
     return (
       <>
         <h2>Averages</h2>
+        <ResponsiveContainer width="100%" height={400}>
+          <ScatterChart
+            margin={{
+              top: 20,
+              right: 20,
+              bottom: 20,
+              left: 20,
+            }}
+          >
+            <CartesianGrid />
+            <XAxis type="category" dataKey="niceDate" name="Date" />
+            <YAxis type="number" dataKey="average" name="average" />
+            <Tooltip />
+            <Scatter
+              name="Averages"
+              data={[...formattedAverages].reverse()}
+              fill="#8884d8"
+            />
+          </ScatterChart>
+        </ResponsiveContainer>
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -64,22 +106,14 @@ const NumericalDisplay = ({ goal }: { goal: Goal }) => {
             </tr>
           </thead>
           <tbody>
-            {averages
-              .sort(
-                (a, b) => Date.parse(b.startOfWeek) - Date.parse(a.startOfWeek)
-              )
-              .map((average) => {
-                const averageDate = new Date(average.startOfWeek);
-                return (
-                  <tr key={average.startOfWeek}>
-                    <td>
-                      {averageDate.getDate()}/{averageDate.getMonth() + 1}/
-                      {averageDate.getFullYear()}
-                    </td>
-                    <td>{average.average}</td>
-                  </tr>
-                );
-              })}
+            {formattedAverages.map((average) => {
+              return (
+                <tr key={average.niceDate}>
+                  <td>{average.niceDate}</td>
+                  <td>{average.average}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </Table>
         <h2>History</h2>
