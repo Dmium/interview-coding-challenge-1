@@ -12,7 +12,7 @@ describe("pageLayout", () => {
   it("should render children", async () => {
     const component = render(
       <PageLayout title="A title">
-        <p data-testId="child">This is a child</p>
+        <p data-testid="child">This is a child</p>
       </PageLayout>
     );
 

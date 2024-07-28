@@ -7,7 +7,7 @@ export const Root: React.FC = () => {
       <a
         href="/goals/new"
         className="btn btn-primary"
-        data-testId="create-goal-link"
+        data-testid="create-goal-link"
       >
         Track a new goal
       </a>

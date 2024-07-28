@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
-import { Container, Navbar } from "react-bootstrap";
+import { Container, Nav, Navbar } from "react-bootstrap";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { NewGoal } from "./roots/goals/new";
@@ -22,7 +22,13 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
         <Navbar.Brand href="/">Daily Goal Tracker</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Nav.Link
+          onClick={() => {
+            localStorage.setItem("goals", "[]");
+          }}
+        >
+          Clear Data
+        </Nav.Link>
       </Container>
     </Navbar>
     <Container className="mt-5">
