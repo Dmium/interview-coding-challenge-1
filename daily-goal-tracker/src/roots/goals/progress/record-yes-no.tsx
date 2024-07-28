@@ -1,18 +1,21 @@
 import React from "react";
 import { Button, ButtonGroup, Form } from "react-bootstrap";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { PageLayout } from "../../../components/pageLayout";
 import { useForm } from "../../../components/useForm";
 import { getGoalById, recordDaysProgress } from "../../../models/goal";
 
 export const RecordYesNo: React.FC = () => {
   const navigate = useNavigate();
-  const today = new Date();
   const { id: goalId } = useParams();
+  const [searchParams] = useSearchParams();
 
-  const initialDate = `${today.getDate()}/${
-    today.getMonth() + 1
-  }/${today.getFullYear()}`;
+  const amendDate = searchParams.get("amendDate") ?? undefined;
+  const initialDateDate = amendDate ? new Date(amendDate) : new Date();
+
+  const initialDate = `${initialDateDate.getDate()}/${
+    initialDateDate.getMonth() + 1
+  }/${initialDateDate.getFullYear()}`;
 
   const initialState = {
     date: initialDate,

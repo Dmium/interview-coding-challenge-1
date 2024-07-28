@@ -13,6 +13,7 @@ const YesNoTable = ({ goal }: { goal: Goal }) => {
           <tr>
             <th>Date</th>
             <th>Yes/No</th>
+            <th>Amend link</th>
           </tr>
         </thead>
         <tbody>
@@ -20,6 +21,8 @@ const YesNoTable = ({ goal }: { goal: Goal }) => {
             .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
             .map((record) => {
               const recordedDate = new Date(record.date);
+              const params = new URLSearchParams();
+              params.append("amendDate", record.date);
               return (
                 <tr key={record.date}>
                   <td>
@@ -27,6 +30,16 @@ const YesNoTable = ({ goal }: { goal: Goal }) => {
                     {recordedDate.getFullYear()}
                   </td>
                   <td>{record.value ? "Yes" : "No"}</td>
+                  <td>
+                    <a
+                      aria-label="Amend this record"
+                      href={`/goals/${
+                        goal.id
+                      }/progress/record-yes-no?${params.toString()}`}
+                    >
+                      Amend
+                    </a>
+                  </td>
                 </tr>
               );
             })}
