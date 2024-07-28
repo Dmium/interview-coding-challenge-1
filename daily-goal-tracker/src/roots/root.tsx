@@ -16,7 +16,7 @@ export const Root: React.FC = () => {
       {getGoals().map((goal) => {
         return (
           <div key={goal.id!}>
-            <GoalSummary goal={goal}></GoalSummary>
+            <GoalSummary goal={goal} showLinks></GoalSummary>
           </div>
         );
       })}
