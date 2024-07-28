@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, ButtonGroup, Form } from "react-bootstrap";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { GoalSummary } from "../../../components/goalSummary";
 import { PageLayout } from "../../../components/pageLayout";
 import { useForm } from "../../../components/useForm";
 import { getGoalById, recordDaysProgress } from "../../../models/goal";
@@ -30,8 +31,8 @@ export const RecordYesNo: React.FC = () => {
     submit(false);
   };
 
+  const goal = getGoalById(parseInt(goalId!))!;
   const submit = (value: boolean) => {
-    const goal = getGoalById(parseInt(goalId!))!;
     const dateParts = values.date.split("/").map((part) => parseInt(part));
     recordDaysProgress(goal, {
       value,
@@ -47,6 +48,7 @@ export const RecordYesNo: React.FC = () => {
   return (
     <div>
       <PageLayout title="Record progress">
+        <GoalSummary goal={goal} showLinks></GoalSummary>
         <form onSubmit={onSubmit}>
           <Form.Group className="mb-3">
             <Form.Label>Enter date (DD/MM/YYYY):</Form.Label>

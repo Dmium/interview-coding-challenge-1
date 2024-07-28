@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export type Record = NumericalRecord | YesNoRecord;
 
 export type NumericalRecord = {
@@ -74,4 +76,40 @@ export const recordDaysProgress = (goalToUpdate: Goal, record: Record) => {
   const goalEntity = goals.find((g) => g.id === goal.id)!;
   goalEntity.records = goal.records;
   setGoals(goals);
+};
+
+export const groupRecordsByWeek = (
+  records: NumericalRecord[]
+): Map<string, NumericalRecord[]> => {
+  const groups = new Map<string, NumericalRecord[]>();
+  records.forEach((record) => {
+    const weekIdentifier = `${moment(record.date).year()}-${moment(
+      record.date
+    ).week()}`;
+    const weekRecords = groups.get(weekIdentifier) ?? [];
+    weekRecords.push(record);
+    groups.set(weekIdentifier, weekRecords);
+  });
+  return groups;
+};
+export type GroupedAverage = { startOfWeek: string; average: number };
+export const getAveragesByWeek = (
+  records: NumericalRecord[]
+): GroupedAverage[] => {
+  const groupedAverages: GroupedAverage[] = [];
+  const groupedRecords = groupRecordsByWeek(records);
+  groupedRecords.forEach((records, weekIdentifier) => {
+    const [year, week] = weekIdentifier.split("-");
+    groupedAverages.push({
+      startOfWeek: moment(new Date(`${year}-01-05T12:00:00.000Z`))
+        .hour(0)
+        .week(parseInt(week))
+        .hour(0)
+        .weekday(0)
+        .toISOString(true),
+      average:
+        records.reduce((acc, record) => acc + record.value, 0) / records.length,
+    });
+  });
+  return groupedAverages;
 };
