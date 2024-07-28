@@ -3,6 +3,7 @@ import React from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { clearGoals } from "./models/goal";
 import { NewGoal } from "./roots/goals/new";
 import { Root } from "./roots/root";
 
@@ -24,7 +25,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Navbar.Brand href="/">Daily Goal Tracker</Navbar.Brand>
         <Nav.Link
           onClick={() => {
-            localStorage.setItem("goals", "[]");
+            clearGoals();
+            location.reload();
           }}
         >
           Clear Data

@@ -8,7 +8,7 @@ jest.mock("react-router-dom", () => ({
   useNavigate: () => mockedUsedNavigate,
 }));
 
-describe("pageLayout", () => {
+describe("new", () => {
   it("should have the correct title content", async () => {
     const component = render(<NewGoal></NewGoal>);
 
