@@ -47,13 +47,29 @@ export const clearGoals = () => {
   localStorage.setItem("goals", "[]");
 };
 
-export const recordDaysProgress = (goal: Goal, record: Record) => {
+const addOrOverwriteRecord = (goal: Goal, record: Record) => {
+  const foundRecordIndex = goal.records.findIndex(
+    (rec) => rec.date === record.date
+  );
   if (goal.type === "numerical" && typeof record.value === "number") {
-    goal.records.push(record);
+    if (foundRecordIndex !== -1) {
+      goal.records[foundRecordIndex] = record;
+    } else {
+      goal.records.push(record);
+    }
   }
   if (goal.type === "yes/no" && typeof record.value === "boolean") {
-    goal.records.push(record);
+    if (foundRecordIndex !== -1) {
+      goal.records[foundRecordIndex] = record;
+    } else {
+      goal.records.push(record);
+    }
   }
+  return goal;
+};
+
+export const recordDaysProgress = (goalToUpdate: Goal, record: Record) => {
+  const goal = addOrOverwriteRecord(goalToUpdate, record);
   const goals = getGoals();
   const goalEntity = goals.find((g) => g.id === goal.id)!;
   goalEntity.records = goal.records;

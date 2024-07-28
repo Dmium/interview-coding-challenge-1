@@ -51,5 +51,32 @@ describe("goal", () => {
         date: "2020-01-01T16:00:00.000Z",
       });
     });
+    it("should overried a record if dates match", () => {
+      clearGoals();
+      insertGoal({
+        description: "A description",
+        type: "numerical",
+        records: [
+          {
+            value: 4,
+            date: "2020-01-01T16:00:00.000Z",
+          },
+        ],
+      });
+      const [goal] = getGoals();
+      const record: NumericalRecord = {
+        value: 5,
+        date: "2020-01-01T16:00:00.000Z",
+      };
+
+      recordDaysProgress(goal, record);
+
+      const [recordedGoal] = getGoals();
+      expect(recordedGoal.records[0]).toEqual({
+        value: 5,
+        date: "2020-01-01T16:00:00.000Z",
+      });
+      expect(recordedGoal.records).toHaveLength(1);
+    });
   });
 });
