@@ -1,11 +1,11 @@
 import React from "react";
-import { Button, ButtonGroup, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { PageLayout } from "../../../components/pageLayout";
 import { useForm } from "../../../components/useForm";
 import { getGoalById, recordDaysProgress } from "../../../models/goal";
 
-export const RecordYesNo: React.FC = () => {
+export const RecordNumerical: React.FC = () => {
   const navigate = useNavigate();
   const today = new Date();
   const { id: goalId } = useParams();
@@ -16,22 +16,14 @@ export const RecordYesNo: React.FC = () => {
 
   const initialState = {
     date: initialDate,
-  };
-  const { onChange, onSubmit, values } = useForm(() => {}, initialState);
-
-  const onYes = () => {
-    submit(true);
+    value: "",
   };
 
-  const onNo = () => {
-    submit(false);
-  };
-
-  const submit = (value: boolean) => {
+  const submit = () => {
     const goal = getGoalById(parseInt(goalId!))!;
     const dateParts = values.date.split("/").map((part) => parseInt(part));
     recordDaysProgress(goal, {
-      value,
+      value: parseInt(values.value),
       date: new Date(
         dateParts[2],
         dateParts[1] - 1,
@@ -40,6 +32,7 @@ export const RecordYesNo: React.FC = () => {
     });
     navigate("/");
   };
+  const { onChange, onSubmit, values } = useForm(submit, initialState);
 
   return (
     <div>
@@ -55,15 +48,21 @@ export const RecordYesNo: React.FC = () => {
               defaultValue={initialDate}
               onChange={onChange}
             />
+            <Form.Label>Enter amount:</Form.Label>
+            <Form.Control
+              type="number"
+              name="value"
+              data-testid="value"
+              onChange={onChange}
+            />
           </Form.Group>
-          <ButtonGroup>
-            <Button variant="primary" onClick={onYes}>
-              Yes
-            </Button>
-            <Button variant="secondary" onClick={onNo} className="mr-3">
-              No
-            </Button>
-          </ButtonGroup>
+          <Button
+            type="submit"
+            variant="primary"
+            aria-label="Submit this record"
+          >
+            Record
+          </Button>
         </form>
       </PageLayout>
     </div>

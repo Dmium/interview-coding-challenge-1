@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { clearGoals } from "./models/goal";
 import { Id } from "./roots/goals/id";
 import { NewGoal } from "./roots/goals/new";
+import { RecordNumerical } from "./roots/goals/progress/record-numerical";
 import { RecordYesNo } from "./roots/goals/progress/record-yes-no";
 import { Root } from "./roots/root";
 
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/goals/:id/progress/record-yes-no",
     element: <RecordYesNo />,
+  },
+  {
+    path: "/goals/:id/progress/record-numerical",
+    element: <RecordNumerical />,
   },
   {
     path: "/goals/:id",

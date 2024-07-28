@@ -22,7 +22,9 @@ export const GoalSummary: React.FC<GoalSummaryProps> = ({
             <>
               <Card.Link
                 data-testid="record-link"
-                href={`/goals/${goal.id}/progress/record-yes-no`}
+                href={`/goals/${goal.id}/progress/record-${
+                  goal.type === "numerical" ? "numerical" : "yes-no"
+                }`}
               >
                 Record progress
               </Card.Link>

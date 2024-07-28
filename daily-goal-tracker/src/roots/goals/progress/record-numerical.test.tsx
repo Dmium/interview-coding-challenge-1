@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react";
 import { clearGoals, insertGoal } from "../../../models/goal";
-import { RecordYesNo } from "./record-yes-no";
+import { RecordNumerical } from "./record-numerical";
 
 const mockedUsedNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -16,47 +16,32 @@ jest.mock("../../../models/goal", () => ({
   recordDaysProgress: (...args: any[]) => mockedRecordDaysProgress(...args),
 }));
 
-describe("recordYesNo", () => {
+describe("recordNumerical", () => {
   beforeEach(() => {
     jest.useFakeTimers().setSystemTime(new Date("2020-01-01T00:00:00.000Z"));
   });
   it("should have the correct title content", async () => {
-    const component = render(<RecordYesNo></RecordYesNo>);
+    const component = render(<RecordNumerical></RecordNumerical>);
 
     const title = await component.findByRole("heading");
     expect(title.textContent).toEqual("Record progress");
   });
-  it("should recordDaysProgress as yes", async () => {
+  it("should recordDaysProgress with amount", async () => {
     clearGoals();
     insertGoal({
       description: "A desc",
-      type: "yes/no",
+      type: "numerical",
       records: [],
     });
-    const component = render(<RecordYesNo></RecordYesNo>);
-    const yesButton = await component.findByText("Yes");
+    const component = render(<RecordNumerical></RecordNumerical>);
+    const recordButton = await component.findByText("Record");
+    const amountInput = await component.findByTestId("value");
 
-    fireEvent.click(yesButton);
-
-    expect(mockedRecordDaysProgress).toHaveBeenCalledWith(expect.anything(), {
-      value: true,
-      date: "2020-01-01T00:00:00.000Z",
-    });
-  });
-  it("should recordDaysProgress as no", async () => {
-    clearGoals();
-    insertGoal({
-      description: "A desc",
-      type: "yes/no",
-      records: [],
-    });
-    const component = render(<RecordYesNo></RecordYesNo>);
-    const noButton = await component.findByText("No");
-
-    fireEvent.click(noButton);
+    fireEvent.change(amountInput, { target: { value: "5" } });
+    fireEvent.click(recordButton);
 
     expect(mockedRecordDaysProgress).toHaveBeenCalledWith(expect.anything(), {
-      value: false,
+      value: 5,
       date: "2020-01-01T00:00:00.000Z",
     });
   });
