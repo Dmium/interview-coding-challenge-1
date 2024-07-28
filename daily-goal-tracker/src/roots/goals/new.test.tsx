@@ -25,7 +25,7 @@ describe("new", () => {
     fireEvent.click(submitButton);
 
     expect(JSON.parse(localStorage.getItem("goals")!)).toEqual([
-      { id: 0, description: "A description", type: "numerical" },
+      { id: 0, description: "A description", records: [], type: "numerical" },
     ]);
   });
   it("should store a new yes/no goal if selected", async () => {
@@ -40,7 +40,7 @@ describe("new", () => {
     fireEvent.click(submitButton);
 
     expect(JSON.parse(localStorage.getItem("goals")!)).toEqual([
-      { id: 0, description: "A description", type: "yes/no" },
+      { id: 0, description: "A description", records: [], type: "yes/no" },
     ]);
   });
   it("should store a new numerical goal if selected", async () => {
@@ -55,11 +55,12 @@ describe("new", () => {
     fireEvent.click(submitButton);
 
     expect(JSON.parse(localStorage.getItem("goals")!)).toEqual([
-      { id: 0, description: "A description", type: "numerical" },
+      { id: 0, description: "A description", records: [], type: "numerical" },
     ]);
   });
   it("should store a second goal", async () => {
     const goal: Goal = {
+      records: [],
       description: "Old goal",
       type: "yes/no",
       id: 0,
@@ -74,7 +75,7 @@ describe("new", () => {
 
     expect(JSON.parse(localStorage.getItem("goals")!)).toEqual([
       goal,
-      { id: 1, description: "A description", type: "numerical" },
+      { id: 1, description: "A description", records: [], type: "numerical" },
     ]);
   });
 });

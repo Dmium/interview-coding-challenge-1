@@ -5,6 +5,7 @@ import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { clearGoals } from "./models/goal";
 import { NewGoal } from "./roots/goals/new";
+import { RecordYesNo } from "./roots/goals/progress/record-yes-no";
 import { Root } from "./roots/root";
 
 const router = createBrowserRouter([
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: "/goals/new",
     element: <NewGoal />,
+  },
+  {
+    path: "/goals/:id/progress/record-yes-no",
+    element: <RecordYesNo />,
   },
 ]);
 

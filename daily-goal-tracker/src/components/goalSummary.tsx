@@ -20,7 +20,10 @@ export const GoalSummary: React.FC<GoalSummaryProps> = ({
           </Card.Subtitle>
           {showLinks && (
             <>
-              <Card.Link data-testid="record-link" href="#">
+              <Card.Link
+                data-testid="record-link"
+                href={`/goals/${goal.id}/progress/record-yes-no`}
+              >
                 Record progress
               </Card.Link>
               <Card.Link data-testid="report-link" href="#">

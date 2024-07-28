@@ -28,10 +28,12 @@ describe("root", () => {
     insertGoal({
       description: "A desc",
       type: "numerical",
+      records: [],
     });
     insertGoal({
       description: "A second desc",
       type: "numerical",
+      records: [],
     });
 
     const component = render(<Root></Root>);

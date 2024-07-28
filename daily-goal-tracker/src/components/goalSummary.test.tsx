@@ -5,6 +5,7 @@ import { GoalSummary } from "./goalSummary";
 describe("goalSummary", () => {
   it("should render a numerical goal", async () => {
     const goal: Goal = {
+      records: [],
       description: "A description",
       type: "numerical",
       id: 1,
@@ -18,6 +19,7 @@ describe("goalSummary", () => {
   });
   it("should render a yes/no goal", async () => {
     const goal: Goal = {
+      records: [],
       description: "A description",
       type: "yes/no",
       id: 1,
@@ -34,6 +36,7 @@ describe("goalSummary", () => {
       description: "A description",
       type: "yes/no",
       id: 1,
+      records: [],
     };
 
     const component = render(<GoalSummary goal={goal} showLinks></GoalSummary>);
@@ -43,6 +46,7 @@ describe("goalSummary", () => {
   });
   it("should not render links by default", async () => {
     const goal: Goal = {
+      records: [],
       description: "A description",
       type: "yes/no",
       id: 1,

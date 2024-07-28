@@ -10,6 +10,7 @@ export const NewGoal: React.FC = () => {
   const initialState: Goal = {
     description: "",
     type: "numerical",
+    records: [],
   };
   const { onChange, onSubmit, values } = useForm(() => {
     insertGoal(values);
