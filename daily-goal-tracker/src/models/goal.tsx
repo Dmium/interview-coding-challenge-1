@@ -12,19 +12,21 @@ export type YesNoRecord = {
   date: string;
 };
 
-export type Goal =
-  | {
-      id?: number;
-      description: string;
-      type: "numerical";
-      records: NumericalRecord[];
-    }
-  | {
-      id?: number;
-      description: string;
-      type: "yes/no";
-      records: YesNoRecord[];
-    };
+export type NumericalGoal = {
+  id?: number;
+  description: string;
+  type: "numerical";
+  records: NumericalRecord[];
+};
+
+export type YesNoGoal = {
+  id?: number;
+  description: string;
+  type: "yes/no";
+  records: YesNoRecord[];
+};
+
+export type Goal = NumericalGoal | YesNoGoal;
 
 export const getGoals = (): Goal[] => {
   return JSON.parse(localStorage.getItem("goals") ?? "[]");
