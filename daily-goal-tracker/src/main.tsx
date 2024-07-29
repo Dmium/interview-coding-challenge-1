@@ -3,7 +3,7 @@ import React from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { clearGoals } from "./models/goal";
+import { clearGoals, seedGoals } from "./models/goal";
 import { Id } from "./roots/goals/id";
 import { NewGoal } from "./roots/goals/new";
 import { RecordNumerical } from "./roots/goals/progress/record-numerical";
@@ -40,9 +40,18 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <Navbar.Brand href="/">Daily Goal Tracker</Navbar.Brand>
         <Nav.Link
           onClick={() => {
-            clearGoals();
-            location.reload();
+            seedGoals();
+            // location.reload();
           }}
+          href="/"
+        >
+          Seed Data
+        </Nav.Link>
+        <Nav.Link
+          onClick={() => {
+            clearGoals();
+          }}
+          href="/"
         >
           Clear Data
         </Nav.Link>

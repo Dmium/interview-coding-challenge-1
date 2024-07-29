@@ -2,8 +2,9 @@ import {
   NumericalRecord,
   YesNoRecord,
   clearGoals,
-  getAveragesByWeek,
   getGoals,
+  getNumericalAveragesByWeek,
+  getYesNoAveragesByWeek,
   groupRecordsByWeek,
   insertGoal,
   recordDaysProgress,
@@ -113,7 +114,7 @@ describe("goal", () => {
         ]);
       });
     });
-    it("should calculate weekly averages", () => {
+    it("should calculate weekly numerical averages", () => {
       const records: NumericalRecord[] = [
         {
           value: 1,
@@ -129,7 +130,7 @@ describe("goal", () => {
         },
       ];
 
-      const averages = getAveragesByWeek(records);
+      const averages = getNumericalAveragesByWeek(records);
 
       expect(averages[0]).toEqual({
         startOfWeek: "2024-07-21T00:00:00.000+01:00",
@@ -138,6 +139,37 @@ describe("goal", () => {
       expect(averages[1]).toEqual({
         startOfWeek: "2024-07-14T00:00:00.000+01:00",
         average: 3,
+      });
+    });
+    it("should calculate weekly yes/no averages", () => {
+      const records: YesNoRecord[] = [
+        {
+          value: true,
+          date: "2024-07-23",
+        },
+        {
+          value: true,
+          date: "2024-07-27",
+        },
+        {
+          value: false,
+          date: "2024-07-24",
+        },
+        {
+          value: false,
+          date: "2024-07-18",
+        },
+      ];
+
+      const averages = getYesNoAveragesByWeek(records);
+
+      expect(averages[0]).toEqual({
+        startOfWeek: "2024-07-21T00:00:00.000+01:00",
+        average: 2 / 7,
+      });
+      expect(averages[1]).toEqual({
+        startOfWeek: "2024-07-14T00:00:00.000+01:00",
+        average: 0,
       });
     });
   });
