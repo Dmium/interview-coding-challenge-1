@@ -1,5 +1,7 @@
 ## Setup
 
+Expects node version 20 or above
+
 ```
 npm i
 ```
@@ -14,7 +16,10 @@ npm run test
 
 ```
 npm run dev
+open http://127.0.0.1:5173/
 ```
+
+Note that there is a seed button at the top of the app to seed initial data
 
 ## Caviats
 
