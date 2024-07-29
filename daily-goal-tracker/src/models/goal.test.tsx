@@ -10,6 +10,9 @@ import {
 } from "./goal";
 
 describe("goal", () => {
+  beforeEach(() => {
+    jest.useFakeTimers().setSystemTime(new Date("2020-01-01T00:00:00.000Z"));
+  });
   describe("recordDaysProgress", () => {
     it("should record a yes/no progress", () => {
       clearGoals();
@@ -128,13 +131,12 @@ describe("goal", () => {
 
       const averages = getAveragesByWeek(records);
 
-      console.log(averages);
       expect(averages[0]).toEqual({
-        startOfWeek: "2024-07-22T00:00:00.000+01:00",
+        startOfWeek: "2024-07-21T00:00:00.000+01:00",
         average: 1.5,
       });
       expect(averages[1]).toEqual({
-        startOfWeek: "2024-07-15T00:00:00.000+01:00",
+        startOfWeek: "2024-07-14T00:00:00.000+01:00",
         average: 3,
       });
     });

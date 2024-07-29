@@ -20,6 +20,12 @@ jest.mock("../../../models/goal", () => ({
 describe("recordYesNo", () => {
   beforeEach(() => {
     jest.useFakeTimers().setSystemTime(new Date("2020-01-01T00:00:00.000Z"));
+    clearGoals();
+    insertGoal({
+      description: "A desc",
+      type: "yes/no",
+      records: [],
+    });
   });
   it("should have the correct title content", async () => {
     const component = render(<RecordYesNo></RecordYesNo>);
